@@ -7,24 +7,8 @@ import Icon from 'react-native-vector-icons/Ionicons'
 //importing screens
 import Dashboard from "./screens/Dashboard"
 import Tasks from "./screens/Tasks"
-import ChartScreen from "./components/Dashboard/ChartScreen"
-
-const DashboardStack = createStackNavigator({
-  Dashboard:{
-    screen:Dashboard,
-    navigationOptions: ({ navigation }) => ({
-      //headerMode: 'none',
-      headerMode: null,
-      navigationOptions: {
-        headerVisible: false,
-      }
-    }),
-  }, 
-  ChartScreen:ChartScreen,
-}
-);
-
-
+import BarScreen from "./components/Dashboard/BarScreen"
+import DashboardStack from "./components/Dashboard/DashboardStack"
 
 
 const TabNavigator= createBottomTabNavigator({

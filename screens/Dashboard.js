@@ -44,7 +44,7 @@ class Dashboard extends Component {
                                      <Button
                                         style={{height:150, width:200, marginLeft:20, borderWidth:0.5, borderColor:"#dddddd"}}
                                         title="Ver el chart"
-                                        onPress={() => this.props.navigation.navigate('ChartScreen')}
+                                        onPress={() => this.props.navigation.navigate('BarScreen')}
                                         />
                                 </View>
                                 

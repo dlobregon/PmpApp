@@ -6,7 +6,6 @@ import {
     Image,
     Button,
 } from "react-native";
-import ChartScreen from "./ChartScreen"
 class DashboardItem
  extends Component {
     render() {

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { 
     View,
     Text,
-    StyleSheet, 
+    StyleSheet,
     ActivityIndicator,
     ScrollView, 
     SafeAreaView
@@ -10,9 +10,8 @@ import {
 import {
     VictoryBar,
     VictoryChart
-  } from "victory-native";
-  import { VictoryTheme } from "victory-core";
-
+} from "victory-native";
+import { VictoryTheme } from "victory-core";
 
 const makeActual =(actual_planificado, actual_real)=>{
     let valorActual=[
@@ -22,7 +21,7 @@ const makeActual =(actual_planificado, actual_real)=>{
     return valorActual;
 }
   
-class ChartScreen extends Component {
+class BarScreen extends Component {
     constructor(props){
         super(props);
         this.state ={ isLoading: true}
@@ -49,8 +48,6 @@ class ChartScreen extends Component {
             console.error(error);
           });
       }
-
-
     render() {
         if(this.state.isLoading){
             return(
@@ -63,7 +60,12 @@ class ChartScreen extends Component {
             <SafeAreaView style={{flex:1}}>
                 <ScrollView scrollEventThrottle={16}>
                     <View style={{borderBottomColor:"gray", borderBottomWidth:0.5}}>
-                        <Text>Ejecutado a la fecha</Text>
+                        <View>
+                            <Text>Ejecutado a la fecha</Text>
+                            <Text style={{fontWeight:"100"}}>
+                                {isNaN(this.state.actual_real/this.state.actual_planificado)?0:((this.state.actual_real/this.state.actual_planificado)*100).toFixed(2)}%
+                            </Text>
+                        </View>
                         <VictoryChart  theme={VictoryTheme.material} domainPadding={80} >
                             <VictoryBar
                                 style={{ data: {  fill: (d) => d.tipo === "Real" ? "#66bb6a" : "#03a9f4", opacity: 1 } }}
@@ -76,7 +78,12 @@ class ChartScreen extends Component {
                         </VictoryChart>
                     </View>     
                     <View>
-                        <Text>Ejecutado total</Text>
+                        <View>
+                            <Text>Ejectuado comparado con el total</Text>
+                            <Text style={{fontWeight:"100"}}>
+                                {isNaN(this.state.actual_real/this.state.total_planificado)?0:((this.state.actual_real/this.state.total_planificado)*100).toFixed(2)}%
+                            </Text>
+                        </View>
                         <VictoryChart  theme={VictoryTheme.material} domainPadding={80} >
                             <VictoryBar
                                 style={{ data: {  fill: (d) => d.tipo === "Real" ? "#66bb6a" : "#03a9f4", opacity: 1 } }}
@@ -94,7 +101,7 @@ class ChartScreen extends Component {
         );
     }
 }
-export default ChartScreen;
+export default BarScreen;
 
 const styles = StyleSheet.create({
     container: {
