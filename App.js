@@ -5,9 +5,7 @@ import { createBottomTabNavigator, createAppContainer, createStackNavigator } fr
 import Icon from 'react-native-vector-icons/Ionicons'
 /*import {  VictoryBar} from "victory-native";*/
 //importing screens
-import Dashboard from "./screens/Dashboard"
 import Tasks from "./screens/Tasks"
-import BarScreen from "./components/Dashboard/BarScreen"
 import DashboardStack from "./components/Dashboard/DashboardStack"
 
 
