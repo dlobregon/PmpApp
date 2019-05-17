@@ -4,19 +4,17 @@ import {
     Text,
     StyleSheet
 } from "react-native";
-import TasksList from "../components/Tasks/TasksList"
-import TaskList from "../components/Tasks/TasksList";
-class Tasks extends Component {
-    static navigationOptions = {
-        header: null,
-      };
+
+class TaskDetails extends Component {
     render() {
         return (
-            <TaskList navigation={this.props.navigation}/>
+            <View style={styles.container}>
+                <Text>TaskDetails</Text>
+            </View>
         );
     }
 }
-export default Tasks;
+export default TaskDetails;
 
 const styles = StyleSheet.create({
     container: {

@@ -32,7 +32,9 @@ class Dashboard extends Component {
     render() {
         return (
             <SafeAreaView>
+                
                 <ScrollView scrollEventThrottle={16}>
+                    <StatusBar barStyle={"light-content"} />
                     <View style={{flex:1, backgroundColor:"white", paddingTop:20}}>
                         <View style={{height:height-50, marginTop: 20}}>
                             <ScrollView >
@@ -47,11 +49,18 @@ class Dashboard extends Component {
                                         onPress={() => this.props.navigation.navigate('BarScreen')}
                                         />
                                 </View>
-                                
-                                <DashboadItem 
-                                    imageUri={require("../assets/Indicadores.png")}
-                                    name= "Indicadores"
-                                /> 
+                                <View>
+                                    <DashboadItem 
+                                        imageUri={require("../assets/Indicadores.png")}
+                                        name= "Indicadores"
+                                    /> 
+                                    <Button
+                                        style={{height:150, width:200, marginLeft:20, borderWidth:0.5, borderColor:"#dddddd"}}
+                                        title="Ver el chart"
+                                        onPress={() => this.props.navigation.navigate('PieScreen')}
+                                        />
+                                </View>
+                               
                                 <DashboadItem 
                                     imageUri={require("../assets/Salud.png")}
                                     name= "Salud del proyecto"
