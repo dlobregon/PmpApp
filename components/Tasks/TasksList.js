@@ -39,10 +39,6 @@ class TaskList extends Component {
             this.startHeaderHeight = 100 + StatusBar.currentHeight
         }
     }
-    /*gotToDetails=()=>{
-        
-        this.props.navigation.navigate('TaskDetails')
-    }*/
     render() {
         const { navigate } = this.props.navigation;
         return (
