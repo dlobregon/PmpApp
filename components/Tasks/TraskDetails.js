@@ -16,15 +16,6 @@ import {VictoryPie, VictoryLabel} from "victory-native"
 import Svg from "react-native-svg";
 
 
-
-const user = 
-    {
-       name: 'brynn',
-       avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
-    }
-const dataFake=[
-    {x:"Prores", }
-]
 class TaskDetails extends Component {
     constructor(props){
         super(props);
