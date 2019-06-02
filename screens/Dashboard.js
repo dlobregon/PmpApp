@@ -1,15 +1,11 @@
 import React, { Component } from "react";
 import { 
     View,
-    Text,
     StyleSheet,
-    SafeAreaView,
-    TextInput, 
+    SafeAreaView, 
     Platform, 
     StatusBar, 
     ScrollView,
-    Image, 
-    Button,
     Dimensions,
 } from "react-native";
 import DashboadItem from "../components/Dashboard/DashboardItem"
@@ -44,7 +40,7 @@ class Dashboard extends Component {
                                <View> 
                                    <DashboadItem 
                                     imageUri={require("../assets/Indicadores.png")}
-                                    name= "Tareas"
+                                    name= "Indicadores"
                                     screen="BarScreen"
                                     clickNavigationButton= {this.clickNavigationButton}                                    
                                     icon="barschart"
@@ -53,7 +49,7 @@ class Dashboard extends Component {
                                 <View>
                                     <DashboadItem 
                                     imageUri={require("../assets/Tareas.png")}
-                                    name= "Indicadores"
+                                    name= "Tareas"
                                     screen="PieScreen"
                                     icon="piechart"
                                     clickNavigationButton= {this.clickNavigationButton}

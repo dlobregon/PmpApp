@@ -12,8 +12,10 @@ import {
     VictoryChart,
     VictoryLegend,
 } from "victory-native";
+import {Card, Divider, Icon, ListItem} from "react-native-elements"
 import {ApiUrl} from "../../constants"
 
+const {height, width} = Dimensions.get("window");
 
 class PieScreen extends Component {
     constructor(props){
@@ -44,10 +46,10 @@ class PieScreen extends Component {
                 { x: ((iniciadas/total)*100).toFixed(2)+"%", y: responseJson.resumenTareas.iniciadas },
               ], 
               labelData:[
-                {name:"No iniciadas: "+responseJson.resumenTareas.noIniciadas, symbol:{type:"circle", fill:"tomato"}},
-                {name:"Completadas: "+responseJson.resumenTareas.completadas, symbol:{type:"circle", fill:"orange"}},
-                {name:"Atrasadas: "+responseJson.resumenTareas.atrasadas, symbol:{type:"circle", fill:"navy"}},
-                {name:"Iniciadas: "+responseJson.resumenTareas.iniciadas, symbol:{type:"circle", fill:"gold"}},
+                {name:"No iniciadas: "+responseJson.resumenTareas.noIniciadas+" - "+((no_iniciadas/total*100)).toFixed(2)+"%", symbol:{type:"circle", fill:"tomato"}},
+                {name:"Completadas: "+responseJson.resumenTareas.completadas+" - "+((completadas/total)*100).toFixed(2)+"%", symbol:{type:"circle", fill:"orange"}},
+                {name:"Atrasadas: "+responseJson.resumenTareas.atrasadas+" - "+((atrasadas/total)*100).toFixed(2)+"%" , symbol:{type:"circle", fill:"navy"}},
+                {name:"Iniciadas: "+responseJson.resumenTareas.iniciadas+ " - "+((iniciadas/total)*100).toFixed(2)+"%", symbol:{type:"circle", fill:"gold"}},
               ]
             }, function(){
     
@@ -68,26 +70,43 @@ class PieScreen extends Component {
         }
         return (
             <View style={styles.container}>
-                <View  style={{ display: "flex", flexWrap: "wrap", flex:1 }}>
-                    <VictoryPie
-                        innerRadius={75}
-                        labelRadius={145}
-                        style={{ labels: { fontSize: 13 } }}
-                        colorScale={["tomato", "orange", "gold", "navy" ]}
-                        data={this.state.pieData}
-                        animate={{ duration: 1500 }}
-                    />
-                </View>
-                <View style={{flex:1, border: { stroke: "black" }, padding:10, height:700}}>
-                    <Svg width={Dimensions.get("window").width} height={600}>
-                      <VictoryLegend
-                        x={5} y={100}
-                        data={this.state.labelData  }
-                        standalone={false}
-                        itemsPerRow={4}
+              <Card>
+                <View style={styles.chartContainer}>
+                    <VictoryPie 
+                          height={320} width={320}
+                          innerRadius={60}
+                          labelRadius={120}
+                          style={{ labels: { fontSize: 13 } }}
+                          colorScale={["tomato", "orange", "gold", "navy" ]}
+                          data={this.state.pieData}
+                          animate={{ duration: 1500 }}
                       />
-                    </Svg>
                 </View>
+                <Divider />    
+                <ListItem
+                  key={1}
+                  title={this.state.labelData[0].name}
+                  leftIcon={{ name: "vinyl", type:"entypo", color:"tomato" }}
+                />
+                <Divider />
+                <ListItem
+                  key={2}
+                  title={this.state.labelData[1].name}
+                  leftIcon={{ name: "vinyl", type:"entypo", color:"orange" }}
+                />
+                <Divider />
+                <ListItem
+                  key={3}
+                  title={this.state.labelData[2].name}
+                  leftIcon={{ name: "vinyl", type:"entypo", color:"gold" }}
+                />
+                <Divider />
+                <ListItem
+                  key={4}
+                  title={this.state.labelData[3].name}
+                  leftIcon={{ name: "vinyl", type:"entypo", color:"navy" }}
+                />
+              </Card>
             </View>
         );
     }
@@ -96,8 +115,13 @@ export default PieScreen;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
+        /*flex: 1,*/
+        /*alignItems: 'center',*/
+        /*justifyContent: 'center'*/
+    }, 
+    chartContainer:{
+      alignItems:"center", 
+      marginTop:-25
+    },
+
 });
