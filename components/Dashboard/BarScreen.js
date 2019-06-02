@@ -6,7 +6,7 @@ import {
     StyleSheet,
     ActivityIndicator,
     ScrollView, 
-    SafeAreaView, 
+    Dimensions, 
     Picker,
 } from "react-native";
 import {
@@ -14,8 +14,10 @@ import {
     VictoryChart,
 } from "victory-native";
 import { VictoryTheme } from "victory-core";
-import SwitchSelector from "react-native-switch-selector";
+import {Card, ListItem, Divider, ButtonGroup} from "react-native-elements"
 
+
+const {height, width} = Dimensions.get("window");
 
 const makeActual =(actual_planificado, actual_real)=>{
     let valorActual=[
@@ -24,25 +26,24 @@ const makeActual =(actual_planificado, actual_real)=>{
     ];
     return valorActual;
 }
-const options = [
-    { label: "Planeado a la fecha", value: 1 },
-    { label: "Pleneado total", value: 2 }
-  ];
-
 class BarScreen extends Component {
     constructor(props){
         super(props);
         this.state ={ 
             isLoading: true,
-            seleccion:1, 
+            seleccion:0, 
             entidades:[{nombre:"Programa Completo"}]
         }
+        this.updateIndex=this.updateIndex.bind(this)
     }
     cambioSeleccion(valor){
         this.setState({
             seleccion:valor
         })
     }
+    updateIndex (selectedIndex) {
+        this.setState({seleccion:selectedIndex})
+      }
     componentDidMount(){
         fetch(ApiUrl+'/dashboard-indicadores/')
           .then((response) => response.json())
@@ -89,42 +90,14 @@ class BarScreen extends Component {
             )
         }
         return (
-            <SafeAreaView style={{flex:1}}>
-                <ScrollView scrollEventThrottle={16}>
-                    <View style={{marginTop:25}}>
-                        <SwitchSelector
-                        options={options}
-                        initial={0}
-                        onPress={value => this.cambioSeleccion(value)}
-                        textColor={"grey"} //'#7a44cf'
-                        selectedColor={"white"}
-                        buttonColor={"grey"}
-                        borderColor={"grey"}
-                        hasPadding
-                        />
-                    </View> 
-                    <View > 
-                        <Picker
-                        selectedValue={this.state.language}
-                        style={{height: 50, width: 100}}
-                       
-                        onValueChange={(itemValue, itemIndex) =>
-                            this.setState({language: itemValue})
-                        }>
-                            
-                            {this.state.entidades.map((entidad)=>{
-                                return (<Picker.Item label={entidad.nombre} value={entidad.nombre} key={this.state.entidades.indexOf(entidad)}/>)
-                            }
-
-                            )}
-                        </Picker>
-                    </View>                   
+           <View>
+               <Card >
                     <View>
                         <View>
                             <Text>Ejecutado a la fecha</Text>
                             <Text style={{fontWeight:"100"}}>
                                 {
-                                    this.state.seleccion===1? 
+                                    this.state.seleccion===0? 
                                     isNaN(this.state.actual_real/this.state.actual_planificado)?0:((this.state.actual_real/this.state.actual_planificado)*100).toFixed(2)
                                     :
                                     isNaN(this.state.actual_real/this.state.total_planificado)?0:((this.state.actual_real/this.state.total_planificado)*100).toFixed(2)
@@ -132,19 +105,47 @@ class BarScreen extends Component {
                                 %
                             </Text>
                         </View>
-                        <VictoryChart  theme={VictoryTheme.material} domainPadding={80} >
-                            <VictoryBar
-                                style={{ data: {  fill: (d) => d.tipo === "Real" ? "#66bb6a" : "#03a9f4", opacity: 1 } }}
-                                data={this.state.seleccion===1?this.state.valorActual:this.state.valorTotal}
-                                alignment="middle"
-                                x="tipo" y="valor"
-                                barWidth={60}
-                                //animate={{ duration: 1000,onLoad: { duration: 500 }}}
+                        <View style={styles.barContainer}>
+                            <VictoryChart  theme={VictoryTheme.material} domainPadding={80} >
+                                <VictoryBar
+                                    style={{ data: {  fill: (d) => d.tipo === "Real" ? "#66bb6a" : "#03a9f4", opacity: 1 } }}
+                                    data={this.state.seleccion===0?this.state.valorActual:this.state.valorTotal}
+                                    alignment="middle"
+                                    x="tipo" y="valor"
+                                    barWidth={60}
+                                    //animate={{ duration: 1000,onLoad: { duration: 500 }}}
+                                />
+                            </VictoryChart>
+                        </View>
+                        
+                        <Divider />
+                        <View>
+                            <Picker
+                            selectedValue={this.state.language}
+                            style={{height: 50, width: 100}}
+                        
+                            onValueChange={(itemValue, itemIndex) =>
+                                this.setState({language: itemValue})
+                            }>
+                                
+                                {this.state.entidades.map((entidad)=>{
+                                    return (<Picker.Item label={entidad.nombre} value={entidad.nombre} key={this.state.entidades.indexOf(entidad)}/>)
+                                }
+
+                                )}
+                            </Picker>
+                        </View>
+                        <Divider />
+                        <View>
+                            <ButtonGroup
+                                onPress={this.updateIndex}
+                                selectedIndex={this.state.seleccion}
+                                buttons={["Planeado a la fecha", "Planeado Total"]}                            
                             />
-                        </VictoryChart>
-                    </View>    
-                </ScrollView>
-            </SafeAreaView>
+                        </View>
+                    </View>  
+               </Card>
+           </View>
                 
         );
     }
@@ -156,5 +157,10 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
+    }, 
+    barContainer:{
+        alignItems:"center", 
+        marginTop:-25, 
+        marginLeft:10
     }
 });
