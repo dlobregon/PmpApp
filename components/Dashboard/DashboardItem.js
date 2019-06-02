@@ -4,25 +4,61 @@ import {
     Text,
     StyleSheet, 
     Image,
-    Button,
+    Dimensions
 } from "react-native";
+import {Card, Button, Icon} from "react-native-elements"
+const {height, width} = Dimensions.get("window");
+
 class DashboardItem
  extends Component {
+
     render() {
         return (
-            <View style={styles.container}>
-                <View style={{height:150, width:200, marginLeft:20, borderWidth:0.5, borderColor:"#dddddd", marginTop:30}}>
-                    <View style={{flex:2}}>
-                        <Image source={this.props.imageUri}
-                         style={{flex:1, width:null, height:null, resizeMode:"cover"}}
-                        />
-                    </View>
-                    <View  style={{flex:1, paddingLeft:10, paddingTop:10}}>
-                        <Text>{this.props.name}</Text>
+                <Card containerStyle={styles.card}>
+                    <View style={{height:150, marginLeft:20,marginTop:25}}>
+                        <View style={{flex:2}}>
+                            <Image source={this.props.imageUri}
+                            style={{flex:1, width:null, height:null, /*alignSelf: "stretch",*/ resizeMode:"cover"}}
+                            />    
+
+                        </View>
+                        <View>
+                            <Icon
+                                name={this.props.icon}
+                                type='antdesign'
+                                color='#517fa4' 
+                                size={75}                                                            
+                                iconStyle={{ 
+                                    position: 'absolute', top: -75, left: 0, 
+                                    backgroundColor:"white", opacity:0.85
+                                    , borderColor:"black"
+                                }}
+                            /> 
+                        </View>
+                                     
                     </View>
                     
-                </View>
-            </View>
+                    <View style={{marginTop:15}} >
+                        <Button
+                            buttonStyle={{
+                                borderColor:"green"
+                            }}
+                            titleStyle={{color:"green", fontSize:20}}
+                            iconContainerStyle={{
+                                marginTop:5
+                            }}
+                            icon={{
+                                name: "keyboard-arrow-right",
+                                size: 15,
+                                color: "green"
+                            }}
+                            iconRight
+                            title={this.props.name}
+                            type="clear"
+                            onPress={()=> this.props.clickNavigationButton(this.props.screen)}
+                        />
+                    </View>
+                </Card>
         );
     }
 }
@@ -34,5 +70,10 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    card:{
+        height: height * 0.40,
+        marginTop:20
+        
     }
 });

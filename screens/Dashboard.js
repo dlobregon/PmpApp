@@ -28,47 +28,37 @@ class Dashboard extends Component {
             this.startHeaderHeight = 100 + StatusBar.currentHeight
         }
     }
-    
+    clickNavigationButton=(screen)=>{
+        this.props.navigation.navigate(screen)
+    }    
+
     render() {
         return (
             <SafeAreaView>
                 
                 <ScrollView scrollEventThrottle={16}>
                     <StatusBar barStyle={"light-content"} />
-                    <View style={{flex:1, backgroundColor:"white", paddingTop:20}}>
-                        <View style={{height:height-50, marginTop: 20}}>
+                    <View style={{flex:1, backgroundColor:"white", paddingTop:20, marginTop:25}}>
+                        <View style={{/*height:height-50, marginTop: 20*/}}>
                             <ScrollView >
                                <View> 
                                    <DashboadItem 
-                                    imageUri={require("../assets/Tareas.png")}
+                                    imageUri={require("../assets/Indicadores.png")}
                                     name= "Tareas"
+                                    screen="BarScreen"
+                                    clickNavigationButton= {this.clickNavigationButton}                                    
+                                    icon="barschart"
                                     /> 
-                                     <Button
-                                        style={{height:150, width:200, marginLeft:20, borderWidth:0.5, borderColor:"#dddddd"}}
-                                        title="Ver el chart"
-                                        onPress={() => this.props.navigation.navigate('BarScreen')}
-                                        />
                                 </View>
                                 <View>
                                     <DashboadItem 
-                                        imageUri={require("../assets/Indicadores.png")}
-                                        name= "Indicadores"
+                                    imageUri={require("../assets/Tareas.png")}
+                                    name= "Indicadores"
+                                    screen="PieScreen"
+                                    icon="piechart"
+                                    clickNavigationButton= {this.clickNavigationButton}
                                     /> 
-                                    <Button
-                                        style={{height:150, width:200, marginLeft:20, borderWidth:0.5, borderColor:"#dddddd"}}
-                                        title="Ver el chart"
-                                        onPress={() => this.props.navigation.navigate('PieScreen')}
-                                        />
                                 </View>
-                               
-                                <DashboadItem 
-                                    imageUri={require("../assets/Salud.png")}
-                                    name= "Salud del proyecto"
-                                /> 
-                                <DashboadItem 
-                                    imageUri={require("../assets/Presupuesto.png")}
-                                    name= "Presupuesto"
-                                />
                             </ScrollView>
                         </View>
                     </View>
