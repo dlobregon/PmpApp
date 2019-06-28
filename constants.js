@@ -2,7 +2,7 @@
 
 import deviceStorage  from './components/Common/MyStorage'
 
-const ApiUrl = "http://192.168.43.210:3000"
+const ApiUrl = "http://192.168.1.11:3000"
 //para la flatlist de las tareas
 const PAGE_SIZE= 20;
 
@@ -15,7 +15,8 @@ export async function getHeaders()
     .then((token)=>{
         myHeaders = {
             headers:{
-                'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + token,
+                'Cache-Control': 'no-cache' 
             }
         }
         return myHeaders;

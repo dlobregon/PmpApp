@@ -5,7 +5,6 @@ import {createSwitchNavigator, createStackNavigator, createAppContainer} from 'r
 // import the different screens
 import Loading from './components/TabNavigator/Loading'
 import Login from './components/Login/Login'
-import Main from './components/Main/Main'
 import MyTabNavigator from './components/TabNavigator/TabNavigatorContainer'
 
 

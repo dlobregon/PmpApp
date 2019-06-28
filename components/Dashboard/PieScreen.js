@@ -24,7 +24,6 @@ class PieScreen extends Component {
     }
 
     componentDidMount(){
-
         getHeaders()
         .then((myConfig)=>{
           fetch(ApiUrl+'/dashboard/getProgramaData/1', myConfig)
@@ -64,7 +63,7 @@ class PieScreen extends Component {
           });
         });
       }
-    render() {
+    render() {  
         if(this.state.isLoading){
             return(
               <View style={{flex: 1, padding: 20}}>

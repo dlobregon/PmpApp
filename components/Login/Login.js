@@ -1,10 +1,12 @@
 // Login.js
 
 import React from 'react'
-import { StyleSheet, Text, TextInput, View, Button,Image } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Button,Image,Dimensions } from 'react-native'
 
 import deviceStorage  from '../Common/MyStorage'
 import {ApiUrl} from "../../constants";
+const {height, width} = Dimensions.get("window");
+
 
 export default class Login extends React.Component {
   state = { username: '', password: '', errorMessage: null }
@@ -77,7 +79,7 @@ export default class Login extends React.Component {
           onChangeText={password => this.setState({ password })}
           value={this.state.password}
         />
-        <Button style={styles.loginButton} title="Login" onPress={this.handleLogin} />
+        <Button color="#3498db" title="Iniciar Sesión" onPress={this.handleLogin} style={styles.mybutton} />
       </View>
     )
   }
@@ -97,7 +99,16 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom:10
   },
-  loginButton:{
-    marginTop:10
-  }
+  mybutton: {
+		backgroundColor: '#3498db',
+		minWidth: width/2,
+		height: 40,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 5,
+		shadowOpacity: 0.4,
+		shadowOffset: {width:0 , height:0},
+		shadowRadius: 3,
+		marginTop: 40
+	},
 })

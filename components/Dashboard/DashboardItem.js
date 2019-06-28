@@ -8,9 +8,9 @@ import {
 } from "react-native";
 import {Card, Button, Icon} from "react-native-elements"
 const {height, width} = Dimensions.get("window");
+class DashboardItem extends Component {
 
-class DashboardItem
- extends Component {
+    
 
     render() {
         return (

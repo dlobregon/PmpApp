@@ -7,11 +7,13 @@ import Icon from 'react-native-vector-icons/Ionicons'
 //importing screens
 import DashboardStack from "../Dashboard/DashboardStack";
 import TasksStack from "../Tasks/TasksStack";
+import SettingItem from "../Settings/SettingItem"
 
 
 const TabNavigator= createBottomTabNavigator({
   Tasks: TasksStack,
   Dashboard: DashboardStack,
+  Settings: SettingItem
 },
 {
   defaultNavigationOptions: ({ navigation }) => ({
@@ -21,11 +23,11 @@ const TabNavigator= createBottomTabNavigator({
       let iconName;
       if (routeName === 'Dashboard') {
         iconName = `ios-stats`;
-        // Sometimes we want to add badges to some icons. 
-        // You can check the implementation below.
       } else if (routeName === 'Tasks') {
         iconName = `ios-clock`;
-      } 
+      }else {
+        iconName = 'ios-settings'
+      }
 
       // You can return any component that you like here!
       return <IconComponent name={iconName} size={25} color={tintColor} />;

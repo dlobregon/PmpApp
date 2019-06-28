@@ -48,11 +48,9 @@ class BarScreen extends Component {
     componentDidMount(){
         getHeaders()
         .then((myConfig)=>{
-            console.log(myConfig)
             fetch(ApiUrl+'/dashboard-indicadores/',myConfig)
             .then((response) => response.json())
             .then((responseJson) => {
-        
                 this.setState({
                 isLoading: false,
                 //dataSource: responseJson.movies,
@@ -68,6 +66,7 @@ class BarScreen extends Component {
             .catch((error) =>{
                 console.error(error);
             });
+
             fetch(ApiUrl+'/dashboard/getSociosTareas/1',myConfig)
             .then((response) => response.json())
             .then((responseJson) => {

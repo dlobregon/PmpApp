@@ -2,6 +2,7 @@ import {createStackNavigator } from 'react-navigation';
 import Dashboard from "../../screens/Dashboard";
 import BarScreen from "../Dashboard/BarScreen";
 import PieScreen from "../Dashboard/PieScreen";
+
 const DashboardStack = createStackNavigator({
     Dashboard:{
       screen:Dashboard,
@@ -24,8 +25,7 @@ const DashboardStack = createStackNavigator({
         title: "Tareas",
       }),
     },
-  }
-  );
+  });
 
 export default DashboardStack
 ;
