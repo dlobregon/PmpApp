@@ -13,7 +13,7 @@ import {
     VictoryLegend,
 } from "victory-native";
 import {Card, Divider, Icon, ListItem} from "react-native-elements"
-import {ApiUrl} from "../../constants"
+import {ApiUrl, getHeaders} from "../../constants"
 
 const {height, width} = Dimensions.get("window");
 
@@ -24,7 +24,10 @@ class PieScreen extends Component {
     }
 
     componentDidMount(){
-        return fetch(ApiUrl+'/dashboard/getProgramaData/1')
+
+        getHeaders()
+        .then((myConfig)=>{
+          fetch(ApiUrl+'/dashboard/getProgramaData/1', myConfig)
           .then((response) => response.json())
           .then((responseJson) => {
             let no_iniciadas = Number(responseJson.resumenTareas.noIniciadas)
@@ -59,6 +62,7 @@ class PieScreen extends Component {
           .catch((error) =>{
             console.error(error);
           });
+        });
       }
     render() {
         if(this.state.isLoading){

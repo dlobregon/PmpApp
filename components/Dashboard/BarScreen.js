@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {ApiUrl} from "../../constants";
+import {ApiUrl, getHeaders} from "../../constants";
 import { 
     View,
     Text,
@@ -9,6 +9,7 @@ import {
     Dimensions, 
     Picker,
 } from "react-native";
+
 import {
     VictoryBar,
     VictoryChart,
@@ -45,41 +46,42 @@ class BarScreen extends Component {
         this.setState({seleccion:selectedIndex})
       }
     componentDidMount(){
-        fetch(ApiUrl+'/dashboard-indicadores/')
-          .then((response) => response.json())
-          .then((responseJson) => {
-    
-            this.setState({
-              isLoading: false,
-              //dataSource: responseJson.movies,
-              total_planificado:responseJson.total_planificado,
-              actual_planificado:responseJson.actual_planificado,
-              actual_real: responseJson.actual_real,
-              valorActual: makeActual(responseJson.actual_planificado, responseJson.actual_real),
-              valorTotal:makeActual(responseJson.total_planificado, responseJson.actual_real), 
-            }, function(){
-    
+        getHeaders()
+        .then((myConfig)=>{
+            console.log(myConfig)
+            fetch(ApiUrl+'/dashboard-indicadores/',myConfig)
+            .then((response) => response.json())
+            .then((responseJson) => {
+        
+                this.setState({
+                isLoading: false,
+                //dataSource: responseJson.movies,
+                total_planificado:responseJson.total_planificado,
+                actual_planificado:responseJson.actual_planificado,
+                actual_real: responseJson.actual_real,
+                valorActual: makeActual(responseJson.actual_planificado, responseJson.actual_real),
+                valorTotal:makeActual(responseJson.total_planificado, responseJson.actual_real), 
+                }, function(){
+                });
+        
+            })
+            .catch((error) =>{
+                console.error(error);
             });
-    
-          })
-          .catch((error) =>{
-            console.error(error);
-          });
-        fetch(ApiUrl+'/dashboard/getSociosTareas/1')
-        .then((response) => response.json())
-        .then((responseJson) => {
-            this.setState({
-              isLoading: false,
-              //dataSource: responseJson.movies,
-              entidades:responseJson.sociosTareas
-            }, function(){
+            fetch(ApiUrl+'/dashboard/getSociosTareas/1',myConfig)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({
+                isLoading: false,
+                //dataSource: responseJson.movies,
+                entidades:responseJson.sociosTareas
+                }, function(){
+                });
+            })
+            .catch((error) =>{
+                console.error(error);
             });
-        })
-          .catch((error) =>{
-            console.error(error);
         });
-
-
       }
     render() {
         if(this.state.isLoading){
