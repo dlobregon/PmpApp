@@ -92,7 +92,7 @@ class BarScreen extends Component {
         }
         return (
            <View>
-               <Card >
+               <Card style={{maxHeight:height * 0.95}}>
                     <View>
                         <View>
                             <Text>Ejecutado a la fecha</Text>
@@ -107,7 +107,7 @@ class BarScreen extends Component {
                             </Text>
                         </View>
                         <View style={styles.barContainer}>
-                            <VictoryChart  theme={VictoryTheme.material} domainPadding={80} >
+                            <VictoryChart height={height*0.50}  theme={VictoryTheme.material} domainPadding={80} >
                                 <VictoryBar
                                     style={{ data: {  fill: (d) => d.tipo === "Real" ? "#66bb6a" : "#03a9f4", opacity: 1 } }}
                                     data={this.state.seleccion===0?this.state.valorActual:this.state.valorTotal}

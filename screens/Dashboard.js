@@ -31,14 +31,13 @@ class Dashboard extends Component {
     render() {
         return (
             <SafeAreaView>
-                
                 <ScrollView scrollEventThrottle={16}>
                     <StatusBar barStyle={"light-content"} />
-                    <View style={{flex:1, backgroundColor:"white", paddingTop:20, marginTop:25}}>
+                    <View style={{flex:1, height:'100%',backgroundColor:"white", paddingTop:20, marginTop:25}}>
                         <View style={{/*height:height-50, marginTop: 20*/}}>
                             <ScrollView >
                                <View> 
-                                   <DashboadItem 
+                                   <DashboadItem
                                     imageUri={require("../assets/Indicadores.png")}
                                     name= "Indicadores"
                                     screen="BarScreen"
