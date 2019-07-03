@@ -10,15 +10,13 @@ import {Card, Button, Icon} from "react-native-elements"
 const {height, width} = Dimensions.get("window");
 class DashboardItem extends Component {
 
-    
-
     render() {
         return (
-                <Card containerStyle={styles.card}>
-                    <View style={{height:150, marginLeft:20,marginTop:25}}>
-                        <View style={{flex:2}}>
+                <Card containerStyle={styles.card} style={{height:height*0.40,maxHeight:height*0.40}}>
+                    <View >
+                        <View style={{height:height*0.20,flex:2, maxHeight:150, marginLeft:20,marginTop:25}}>
                             <Image source={this.props.imageUri}
-                            style={{flex:1, width:null, height:null, /*alignSelf: "stretch",*/ resizeMode:"cover"}}
+                            style={{flex:1,width:null, height:null, /*alignSelf: "stretch",*/ resizeMode:"cover"}}
                             />    
 
                         </View>
@@ -38,7 +36,7 @@ class DashboardItem extends Component {
                                      
                     </View>
                     
-                    <View style={{marginTop:15}} >
+                    <View style={{maxHeight:height*0.05,marginTop:15}} >
                         <Button
                             buttonStyle={{
                                 borderColor:"green"
@@ -72,8 +70,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     card:{
-        height: height * 0.40,
-        marginTop:20
-        
     }
 });
