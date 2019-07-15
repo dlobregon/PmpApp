@@ -1,7 +1,7 @@
 
 
 import deviceStorage from './components/Common/MyStorage'
-const ApiUrl = "http://192.168.42.11:3000"
+const ApiUrl = require("./app_config.json").host
 //para la flatlist de las tareas
 const PAGE_SIZE= 20;
 
