@@ -15,7 +15,8 @@ export async function getHeaders()
         myHeaders = {
             headers:{
                 'Authorization': 'Bearer ' + token,
-                'Cache-Control': 'no-cache' 
+                'Cache-Control': 'no-cache' , 
+                'Content-Type': 'application/json'
             }
         }
         return myHeaders;
