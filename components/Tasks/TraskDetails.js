@@ -15,19 +15,39 @@ import { Card,
 import {VictoryPie, VictoryLabel} from "victory-native"
 import Svg from "react-native-svg";
 
+//recursos para hacer la llamada al api
+import {ApiUrl, getHeaders} from "../../constants";
+import deviceStorage  from '../Common/MyStorage'
 
+
+//función que reconstruye los valores del item para poder trabajar de acuerdo a los controles de esta pantalla
+const configureItem=(item)=>{
+   let newValue={}
+   //configuracion del valor
+   newValue.value=item.progreso
+   let tmp = item.progreso*100
+   newValue.arcValues=[
+    { x: "Tarea", y: 100-tmp},
+    { x: "", y: tmp }
+   ]
+   newValue.item=item;
+   return newValue;
+
+}
 class TaskDetails extends Component {
     constructor(props){
         super(props);
+        const {navigation}=props;
+        let newValue=configureItem(navigation.getParam('item', 'NO-Item'))
         this.state={
-            value:0.75,
-            valorTarea:[
-                { x: "Tarea", y: 25 },
-                { x: "", y: 75}
-            ], 
-            etiqueta:"75%"
+            value:newValue.value,
+            value:newValue.value,
+            valorTarea:newValue.arcValues, 
+            etiqueta:newValue.value+"%", 
+            item:newValue.item
         }
     }
+    
     //función que permite el cambio de las actividades
     changeValue=(value)=>{
         let tmp=value*100
@@ -42,9 +62,35 @@ class TaskDetails extends Component {
         })
     }
 
+    //funcion que se utiliza para poder actualizar en el API del valor del progreso
+    setTaskNewValue=()=>{
+        getHeaders()
+                .then((myConfig)=>{
+                    fetch(ApiUrl+'/app_api/setTaskProgress',{
+                        method:"POST",
+                        body:JSON.stringify({
+                            "task":this.state.item.tarea, 
+                            "value":this.state.value
+                        }),
+                        headers:myConfig.headers,                         
+                    })
+                    .then((response) => response.json())
+                    .then((responseJson) => {
+                        //almacenamos la respuesta en el estado
+                        console.log(responseJson)
+                    })
+                    .catch((error) =>{
+                        console.error(error);
+                    });
+                });
+    }
+    
+
+
     render() {
+        
         return (
-            <Card title="Tarea" titleStyle={{fontSize:20}} titleNumberOfLines={2}>
+            <Card title={this.state.item.nombre} titleStyle={{fontSize:20}} titleNumberOfLines={2}>
                 <View style={{marginLeft:-30, marginBottom:-30}}>     
                 <Svg style={{height:225, marginTop:-50}}> 
                     <VictoryPie
@@ -74,7 +120,7 @@ class TaskDetails extends Component {
                 <Divider />
                 <ListItem
                     title="Duraci&oacute;n"
-                    subtitle="17 d&iacute;as"
+                    subtitle={this.state.item.duracion+" días"}
                     leftIcon={{name:"av-timer"}}
                 />
                 <Divider />
@@ -100,6 +146,7 @@ class TaskDetails extends Component {
                         }}
                         title="Guardar Avance"
                         type="outline"
+                        onPress={this.setTaskNewValue}
                     />
                 </View>
                 
