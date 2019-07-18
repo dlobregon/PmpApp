@@ -49,6 +49,11 @@ class TaskList extends Component {
           }
       }
     componentDidMount(){
+               this.getTasks()
+    }
+
+    //función que hace la llamada al API
+    getTasks=()=>{
         //obtenemos el usuario
         deviceStorage.getItem("user").then(
             (user)=>{
@@ -71,9 +76,7 @@ class TaskList extends Component {
                     });
                 });
             }
-        );
-
-        
+        ); 
     }
     componentWillMount(){
         this.startHeaderHeight = 80
@@ -107,7 +110,8 @@ class TaskList extends Component {
                                       subtitleNumberOfLines={0}
                                       containerStyle={{ borderBottomWidth: 1, borderBottomColor:"#D3D3D3" }}
                                       onPress={()  => this.props.navigation.navigate('TaskDetails', {
-                                        item:item
+                                        item:item, 
+                                        getTasks: () => this.getTasks()
                                       })}
                                     />
                                   )}

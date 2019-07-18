@@ -17,7 +17,6 @@ import Svg from "react-native-svg";
 
 //recursos para hacer la llamada al api
 import {ApiUrl, getHeaders} from "../../constants";
-import deviceStorage  from '../Common/MyStorage'
 
 
 //función que reconstruye los valores del item para poder trabajar de acuerdo a los controles de esta pantalla
@@ -31,6 +30,7 @@ const configureItem=(item)=>{
     { x: "", y: tmp }
    ]
    newValue.item=item;
+   newValue.flag=tmp
    return newValue;
 
 }
@@ -41,13 +41,15 @@ class TaskDetails extends Component {
         let newValue=configureItem(navigation.getParam('item', 'NO-Item'))
         this.state={
             value:newValue.value,
-            value:newValue.value,
             valorTarea:newValue.arcValues, 
-            etiqueta:newValue.value+"%", 
+            etiqueta:newValue.flag+"%", 
             item:newValue.item
         }
     }
-    
+    //llamamos a la función para obtener tareas en el TaskList
+    componentWillUnmount() {
+        this.props.navigation.state.params.getTasks()
+    }
     //función que permite el cambio de las actividades
     changeValue=(value)=>{
         let tmp=value*100
@@ -77,7 +79,7 @@ class TaskDetails extends Component {
                     .then((response) => response.json())
                     .then((responseJson) => {
                         //almacenamos la respuesta en el estado
-                        console.log(responseJson)
+                       
                     })
                     .catch((error) =>{
                         console.error(error);
