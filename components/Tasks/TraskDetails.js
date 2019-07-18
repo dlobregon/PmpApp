@@ -14,7 +14,8 @@ import { Card,
     Slider} from 'react-native-elements'
 import {VictoryPie, VictoryLabel} from "victory-native"
 import Svg from "react-native-svg";
-
+//spinner para el control de la petición
+import Spinner from 'react-native-loading-spinner-overlay';
 //recursos para hacer la llamada al api
 import {ApiUrl, getHeaders} from "../../constants";
 
@@ -43,7 +44,8 @@ class TaskDetails extends Component {
             value:newValue.value,
             valorTarea:newValue.arcValues, 
             etiqueta:newValue.flag+"%", 
-            item:newValue.item
+            item:newValue.item, 
+            spinner:false
         }
     }
     //llamamos a la función para obtener tareas en el TaskList
@@ -66,6 +68,9 @@ class TaskDetails extends Component {
 
     //funcion que se utiliza para poder actualizar en el API del valor del progreso
     setTaskNewValue=()=>{
+        this.setState({
+            spinner:true
+        })
         getHeaders()
                 .then((myConfig)=>{
                     fetch(ApiUrl+'/app_api/setTaskProgress',{
@@ -78,8 +83,10 @@ class TaskDetails extends Component {
                     })
                     .then((response) => response.json())
                     .then((responseJson) => {
-                        //almacenamos la respuesta en el estado
-                       
+                        //se tiene que crear un loading
+                        this.setState({
+                            spinner:false
+                        })
                     })
                     .catch((error) =>{
                         console.error(error);
@@ -93,6 +100,12 @@ class TaskDetails extends Component {
         
         return (
             <Card title={this.state.item.nombre} titleStyle={{fontSize:20}} titleNumberOfLines={2}>
+                <Spinner
+                    visible={this.state.spinner}
+                    textContent={'Cargando...'}
+                    textStyle={styles.spinnerTextStyle}
+                    overlayColor={"#BDBDBD"}
+                />
                 <View style={{marginLeft:-30, marginBottom:-30}}>     
                 <Svg style={{height:225, marginTop:-50}}> 
                     <VictoryPie
@@ -164,5 +177,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    },spinnerTextStyle: {
+        color: '#FFF'
+      },
 });

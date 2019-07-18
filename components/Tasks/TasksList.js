@@ -19,18 +19,7 @@ import {ApiUrl, getHeaders} from "../../constants";
 import deviceStorage  from '../Common/MyStorage'
 
 const {height, width} = Dimensions.get("window");
-const data =[
-    {item:"uno", email:"uno---"},
-    {item:"dos", email:"dps---"},
-    {item:"tres", email:"dps---"},
-    {item:"cuatro", email:"dps---"},
-    {item:"cinco", email:"dps---"},
-    {item:"seis", email:"dps---"},
-    {item:"siete", email:"dps---"},
-    {item:"ocho", email:"dps---"},
-    {item:"nueve", email:"dps---"},
-    {item:"diez", email:"dps---"},
-]
+
 
 const textAdjust =(string)=>{
     let maxlimit=80;
