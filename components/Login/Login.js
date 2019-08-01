@@ -1,10 +1,12 @@
 // Login.js
 
 import React from 'react'
-import { StyleSheet, Text, TextInput, View, Button,Image,Dimensions } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Button,Image,Dimensions , KeyboardAvoidingView} from 'react-native'
+
 
 import deviceStorage  from '../Common/MyStorage'
 import {ApiUrl} from "../../constants";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 const {height, width} = Dimensions.get("window");
 
 
@@ -56,7 +58,7 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}behavior="padding">
         <Image
           source={require('../../assets/logo-GAP-letras.png')}
         />
@@ -80,7 +82,8 @@ export default class Login extends React.Component {
           value={this.state.password}
         />
         <Button color="#3498db" title="Iniciar Sesión" onPress={this.handleLogin} style={styles.mybutton} />
-      </View>
+        <View style={{ height: 60 }} />
+      </KeyboardAvoidingView>
     )
   }
 }
@@ -93,7 +96,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 40,
-    width: '90%',
+    width: wp('90%'),
     borderColor: 'gray',
     borderWidth: 1,
     marginTop: 8,
