@@ -4,7 +4,8 @@ import {
     Text,
     StyleSheet, 
     ActivityIndicator,
-    Dimensions
+    Dimensions, 
+    ScrollView
 } from "react-native";
 import Svg from "react-native-svg";
 import {
@@ -72,7 +73,7 @@ class PieScreen extends Component {
             )
         }
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
               <Card>
                 <View style={styles.chartContainer}>
                     <VictoryPie 
@@ -110,7 +111,7 @@ class PieScreen extends Component {
                   leftIcon={{ name: "vinyl", type:"entypo", color:"navy" }}
                 />
               </Card>
-            </View>
+            </ScrollView>
         );
     }
 }
