@@ -3,7 +3,7 @@ import {
     View,
     Text,
     StyleSheet, 
-    Image
+    ToastAndroid
 } from "react-native";
 
 import { Card, 
@@ -20,6 +20,8 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import {ApiUrl, getHeaders} from "../../constants";
 //librería para facilitar que el app sea responsiva
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+//tost and duration
+import Toast from 'react-native-easy-toast'
 
 
 //función que reconstruye los valores del item para poder trabajar de acuerdo a los controles de esta pantalla
@@ -89,6 +91,7 @@ class TaskDetails extends Component {
                         this.setState({
                             spinner:false
                         })
+                        this.refs.toast.show('Tarea actualizada.');
                     })
                     .catch((error) =>{
                         console.error(error);
@@ -148,6 +151,11 @@ class TaskDetails extends Component {
                         thumbTintColor={"black"}
                     />
                 </View>
+                <Toast ref="toast"
+                    position='bottom'
+                    positionValue={200}
+                    fadeInDuration={750}
+                />
                 <Divider />
                 <View style={{marginTop:10}} >
                     <Button
@@ -165,7 +173,6 @@ class TaskDetails extends Component {
                         onPress={this.setTaskNewValue}
                     />
                 </View>
-                
             </Card>
             
         );
