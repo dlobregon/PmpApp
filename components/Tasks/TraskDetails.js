@@ -12,12 +12,14 @@ import { Card,
     Icon , 
     Divider, 
     Slider} from 'react-native-elements'
-import {VictoryPie, VictoryLabel} from "victory-native"
+import {VictoryPie, VictoryLabel, Style} from "victory-native"
 import Svg from "react-native-svg";
 //spinner para el control de la petición
 import Spinner from 'react-native-loading-spinner-overlay';
 //recursos para hacer la llamada al api
 import {ApiUrl, getHeaders} from "../../constants";
+//librería para facilitar que el app sea responsiva
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
 //función que reconstruye los valores del item para poder trabajar de acuerdo a los controles de esta pantalla
@@ -99,40 +101,39 @@ class TaskDetails extends Component {
     render() {
         
         return (
-            <Card title={this.state.item.nombre} titleStyle={{fontSize:20}} titleNumberOfLines={2}>
+            <Card title={this.state.item.nombre} titleStyle={{fontSize:20}} titleNumberOfLines={2} 
+            >
                 <Spinner
                     visible={this.state.spinner}
                     textContent={'Cargando...'}
                     textStyle={styles.spinnerTextStyle}
                     overlayColor={"#BDBDBD"}
                 />
-                <View style={{marginLeft:-30, marginBottom:-30}}>     
-                <Svg style={{height:225, marginTop:-50}}> 
-                    <VictoryPie
-                        data={this.state.valorTarea}
-                        innerRadius={120}
-                        cornerRadius={25}
-                        labels={() => null}
-                        style={{
-                            data: { fill: (d) => {
-                                const color = d.y < 30 ? "red" : "green";
-                                return d.x === "" ? color : "transparent";
+                <View style={{marginLeft:-30, marginBottom:hp("-3%")}}>     
+                    <Svg style={{height:hp("35%"), marginTop:-50}}> 
+                        <VictoryPie
+                            data={this.state.valorTarea}
+                            innerRadius={120}
+                            cornerRadius={25}
+                            labels={() => null}
+                            style={{
+                                data: { fill: (d) => {
+                                    const color = d.y < 30 ? "red" : "green";
+                                    return d.x === "" ? color : "transparent";
+                                    }
                                 }
-                            }
-                        }}
-                        startAngle={90}
-                        endAngle={-90}
-                    />
-                    <VictoryLabel
-                        textAnchor="middle"
-                        style={{ fontSize: 40}}
-                        x={190} y={140}
-                        text={this.state.etiqueta}
-                    />
-                </Svg> 
-                
+                            }}
+                            startAngle={90}
+                            endAngle={-90}
+                        />
+                        <VictoryLabel
+                            textAnchor="middle"
+                            style={{ fontSize: 40}}
+                            x={190} y={140}
+                            text={this.state.etiqueta}
+                        />
+                    </Svg>                 
                 </View>
-                <Divider />
                 <ListItem
                     title="Duraci&oacute;n"
                     subtitle={this.state.item.duracion+" días"}
@@ -180,4 +181,8 @@ const styles = StyleSheet.create({
     },spinnerTextStyle: {
         color: '#FFF'
       },
+    cardStyle:{
+        borderLeftWidth:0, 
+        borderRightWidth:0,
+    }
 });
