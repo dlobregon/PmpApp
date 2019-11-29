@@ -69,10 +69,12 @@ class TaskList extends Component {
     }
     componentWillMount(){
         this.startHeaderHeight = 80
-        if(Platform.OS=== "android"){
+        /*if(Platform.OS=== "android"){
             this.startHeaderHeight = 100 + StatusBar.currentHeight
-        }
-        
+        }*/
+        /*if (Platform.OS === 'android') {
+            SafeAreaView.setStatusBarHeight(0);
+          }*/
     }
 
     render() {
@@ -88,24 +90,35 @@ class TaskList extends Component {
            <SafeAreaView>
                 <ScrollView scrollEventThrottle={16}>
                     <View style={{flex:1, backgroundColor:"white"}}>
-                        <View style={{/*marginLeft:20,*/ marginTop: 20}}>                            
+                        <View style={{/*marginLeft:20,*/ marginTop: 20}}> 
+                        {this.state.tasks.length>0? 
                             <FlatList 
                                 data={this.state.tasks}
                                 renderItem={({ item }) => (
                                     <ListItem
-                                      title={textAdjust( item.nombre)}
-                                      subtitle={`EDT: ${item.edt}`}
-                                      titleNumberOfLines={0}
-                                      subtitleNumberOfLines={0}
-                                      containerStyle={{ borderBottomWidth: 1, borderBottomColor:"#D3D3D3" }}
-                                      onPress={()  => this.props.navigation.navigate('TaskDetails', {
+                                        title={textAdjust( item.nombre)}
+                                        subtitle={`EDT: ${item.edt}`}
+                                        titleNumberOfLines={0}
+                                        subtitleNumberOfLines={0}
+                                        containerStyle={{ borderBottomWidth: 1, borderBottomColor:"#D3D3D3" }}
+                                        onPress={()  => this.props.navigation.navigate('TaskDetails', {
                                         item:item, 
                                         getTasks: () => this.getTasks()
-                                      })}
+                                        })}
                                     />
-                                  )}
+                                    )}
                                 keyExtractor={(item, index) => index.toString()}
                             />
+                        : 
+                            <ListItem
+                                title="Sin tareas"
+                                subtitle="Actualmente no hay tareas asignadas a tu usuario."
+                                titleNumberOfLines={0}
+                                subtitleNumberOfLines={0}
+                                containerStyle={{ borderBottomWidth: 1, borderBottomColor:"#D3D3D3" }}
+                            />
+                        }                           
+                            
                         </View>
                     </View>
                 </ScrollView>

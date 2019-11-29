@@ -3,7 +3,7 @@
     "name": "Pmp App",
     "slug": "PmpApp",
     "privacy": "public",
-    "sdkVersion": "32.0.0",
+    "sdkVersion": "33.0.0",
     "platforms": [
       "ios",
       "android"
@@ -26,7 +26,10 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.ravida.pmpapp"
+      "package": "com.ravida.pmpapp", 
+      "permissions": [
+        "INTERNET"
+      ]
     }
   }
 }

@@ -16,7 +16,7 @@ const RootStack = createSwitchNavigator(
     Main:MyTabNavigator
   },
   {
-    initialRouteName: 'Loading'
+    initialRouteName: 'Loading',
   }
 )
 
