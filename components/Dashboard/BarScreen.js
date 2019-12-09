@@ -5,7 +5,6 @@ import {
     Text,
     StyleSheet,
     ActivityIndicator,
-    ScrollView, 
     Dimensions, 
     Picker,
 } from "react-native";
@@ -15,7 +14,7 @@ import {
     VictoryChart,
 } from "victory-native";
 import { VictoryTheme } from "victory-core";
-import {Card, ListItem, Divider, ButtonGroup} from "react-native-elements"
+import {Card, Divider, ButtonGroup} from "react-native-elements"
 
 
 const {height, width} = Dimensions.get("window");
@@ -28,6 +27,7 @@ const makeActual =(actual_planificado, actual_real)=>{
     return valorActual;
 }
 class BarScreen extends Component {
+    _isMounted=false;
     constructor(props){
         super(props);
         this.state ={ 
@@ -46,22 +46,24 @@ class BarScreen extends Component {
         this.setState({seleccion:selectedIndex})
       }
     componentDidMount(){
+        this._isMounted=true;
         getHeaders()
         .then((myConfig)=>{
             fetch(ApiUrl+'/dashboard-indicadores/',myConfig)
             .then((response) => response.json())
             .then((responseJson) => {
-                this.setState({
-                isLoading: false,
-                //dataSource: responseJson.movies,
-                total_planificado:responseJson.total_planificado,
-                actual_planificado:responseJson.actual_planificado,
-                actual_real: responseJson.actual_real,
-                valorActual: makeActual(responseJson.actual_planificado, responseJson.actual_real),
-                valorTotal:makeActual(responseJson.total_planificado, responseJson.actual_real), 
-                }, function(){
-                });
-        
+                if(this._isMounted){
+                    this.setState({
+                        isLoading: false,
+                        //dataSource: responseJson.movies,
+                        total_planificado:responseJson.total_planificado,
+                        actual_planificado:responseJson.actual_planificado,
+                        actual_real: responseJson.actual_real,
+                        valorActual: makeActual(responseJson.actual_planificado, responseJson.actual_real),
+                        valorTotal:makeActual(responseJson.total_planificado, responseJson.actual_real), 
+                        }, function(){
+                        });
+                }
             })
             .catch((error) =>{
                 console.error(error);
@@ -82,6 +84,9 @@ class BarScreen extends Component {
             });
         });
       }
+    componentWillUnmount(){
+        this._isMounted=false;
+    }
     render() {
         if(this.state.isLoading){
             return(
