@@ -27,6 +27,7 @@ const textAdjust =(string)=>{
 }
 
 class TaskList extends Component {
+    _connection=true;
     static navigationOptions = {
         header: null,
       };
@@ -59,8 +60,14 @@ class TaskList extends Component {
                     .then((responseJson) => {
                         //almacenamos la respuesta en el estado
                         this.setState({tasks:responseJson.tasks, isLoading:false})
+                        
                     })
                     .catch((error) =>{
+                        this._connection=false
+                        this.setState({
+                            isLoading:false
+                        })
+                        console.log("shit happens")
                         console.error(error);
                     });
                 });
@@ -91,7 +98,15 @@ class TaskList extends Component {
                 <ScrollView scrollEventThrottle={16}>
                     <View style={{flex:1, backgroundColor:"white"}}>
                         <View style={{/*marginLeft:20,*/ marginTop: 20}}> 
-                        {this.state.tasks.length>0? 
+                        {!this._connection?
+                          <ListItem
+                                title="Problemas de Conexión"
+                                subtitle="Verificar conectividad del dispositivo."
+                                titleNumberOfLines={0}
+                                subtitleNumberOfLines={0}
+                                containerStyle={{ borderBottomWidth: 1, borderBottomColor:"#D3D3D3" }}
+                            />
+                         :this.state.tasks.length>0? 
                             <FlatList 
                                 data={this.state.tasks}
                                 renderItem={({ item }) => (
@@ -117,6 +132,8 @@ class TaskList extends Component {
                                 subtitleNumberOfLines={0}
                                 containerStyle={{ borderBottomWidth: 1, borderBottomColor:"#D3D3D3" }}
                             />
+                        
+                          
                         }                           
                             
                         </View>
