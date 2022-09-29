@@ -15,7 +15,7 @@
     "react-native-loading-spinner-overlay": "^1.0.1",
     "react-native-responsive-screen": "^1.2.2",
     "react-navigation": "^3.5.1",
-    "victory-native": "^32.0.1"
+    "victory-native": "^36.6.8"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"
